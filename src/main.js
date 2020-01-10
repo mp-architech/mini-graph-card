@@ -323,7 +323,7 @@ class MiniGraphCard extends LitElement {
 
   renderStates() {
     const { entity, value } = this.tooltip;
-    const state = value !== undefined ? value : this.entity[0].state;
+    const state = value !== undefined ? value : getAvg(this.entity, 'state');
     const color = this.config.entities[0].state_adaptive_color ? `color: ${this.color};` : '';
     if (this.config.show.state)
       return html`
@@ -402,6 +402,7 @@ class MiniGraphCard extends LitElement {
             @mouseout=${() => (this.tooltip = {})}>
             ${this.renderIndicator(this.entity[entity.index].state, entity.index)}
             <span class="ellipsis">${this.computeName(entity.index)}</span>
+            <span class="ellipsis">(${this.computeState(this.entity[entity.index].state)}${this.computeUom(entity.index)})</span>
           </div>
         `)}
       </div>
