@@ -19,7 +19,7 @@ This card is available in [HACS](https://github.com/custom-components/hacs/issue
 
   ```yaml
   resources:
-    - url: /local/mini-graph-card-bundle.js?v=0.8.2
+    - url: /local/mini-graph-card-bundle.js?v=0.9.3
       type: module
   ```
 
@@ -30,14 +30,14 @@ This card is available in [HACS](https://github.com/custom-components/hacs/issue
 2. Grab `mini-graph-card-bundle.js`:
 
   ```
-  $ wget https://github.com/kalkih/mini-graph-card/releases/download/v0.8.2/mini-graph-card-bundle.js
+  $ wget https://github.com/kalkih/mini-graph-card/releases/download/v0.9.3/mini-graph-card-bundle.js
   ```
 
 3. Add a reference to `mini-graph-card-bundle.js` inside your `ui-lovelace.yaml`:
 
   ```yaml
   resources:
-    - url: /local/mini-graph-card-bundle.js?v=0.8.2
+    - url: /local/mini-graph-card-bundle.js?v=0.9.3
       type: module
   ```
 
@@ -52,7 +52,7 @@ This card is available in [HACS](https://github.com/custom-components/hacs/issue
 
   ```yaml
   resources:
-    - url: /local/mini-graph-card-bundle.js?v=0.8.2
+    - url: /local/mini-graph-card-bundle.js?v=0.9.3
       type: module
   ```
 
@@ -74,13 +74,14 @@ This card is available in [HACS](https://github.com/custom-components/hacs/issue
 | group | boolean | `false` | v0.2.0 | Disable paddings and box-shadow, useful when nesting the card.
 | hours_to_show | integer | `24` | v0.0.2 | Specify how many hours of history the graph should present.
 | points_per_hour | number | `0.5` | v0.2.0 | Specify amount of data points the graph should display for each hour, *(basically the detail/accuracy/smoothing of the graph)*.
-| aggregate_func | string | `avg` | v0.8.0 | Specify aggregate function used to calculate point/bar in the graph, `avg`, `min`, `max`.
+| aggregate_func | string | `avg` | v0.8.0 | Specify aggregate function used to calculate point/bar in the graph, `avg`, `min`, `max`, `first`, `last`, `sum`.
 | group_by | string | `interval` | v0.8.0 | Specify type of grouping of data, dynamic `interval`, `date` or `hour`.
 | update_interval | number |  | v0.4.0 | Specify a custom update interval of the history data (in seconds), instead of on every state change.
 | cache | boolean | `true` | v0.9.0 | Enable/disable local caching of history data.
 | show | list |  | v0.2.0 | List of UI elements to display/hide, for available items see [available show options](#available-show-options).
 | animate | boolean | `false` | v0.2.0 | Add a reveal animation to the graph.
 | height | number | `150` | v0.0.1 | Set a custom height of the line graph.
+| bar_spacing | number | `4` | v0.9.0 | Set the spacing between bars in bar graph.
 | line_width | number | `5` | v0.0.1 | Set the thickness of the line.
 | line_color | string/list | `var(--accent-color)` | v0.0.1 | Set a custom color for the graph line, provide a list of colors for multiple graph entries.
 | color_thresholds | list |  | v0.2.3 | Set thresholds for dynamic graph colors, see [Line color object](#line-color-object).
@@ -109,7 +110,7 @@ properties of the Entity object detailed in the following table (as per `sensor.
 | name | string |  | Set a custom display name, defaults to entity's friendly_name.
 | color | string |  | Set a custom color, overrides all other color options including thresholds.
 | unit | string |  | Set a custom unit of measurement, overrides `unit` set in base config.
-| aggregate_func | string |  | Override for aggregate function used to calculate point on the graph, `avg`, `min`, `max`.
+| aggregate_func | string |  | Override for aggregate function used to calculate point on the graph, `avg`, `min`, `max`, `first`, `last`, `sum`.
 | show_state | boolean |  | Display the current state.
 | show_indicator | boolean |  | Display a color indicator next to the state, (only when more than two states are visible).
 | show_graph | boolean |  | Set to false to completely hide the entity in the graph.

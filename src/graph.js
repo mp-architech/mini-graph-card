@@ -10,6 +10,9 @@ export default class Graph {
       avg: this._average,
       max: this._maximum,
       min: this._minimum,
+      first: this._first,
+      last: this._last,
+      sum: this._sum,
     };
 
     this._history = undefined;
@@ -46,6 +49,9 @@ export default class Graph {
 
     const coords = this._history.reduce((res, item) => this._reducer(res, item), []);
 
+    // drop potential out of bound entry's except one
+    if (coords[0] && coords[0].length) coords[0] = [coords[0][coords[0].length - 1]];
+
     // extend length to fill missing history
     const requiredNumOfPoints = Math.ceil(this.hours * this.points);
     coords.length = requiredNumOfPoints;
@@ -58,7 +64,7 @@ export default class Graph {
   _reducer(res, item) {
     const age = this._endTime - new Date(item.last_changed).getTime();
     const interval = (age / ONE_HOUR * this.points) - this.hours * this.points;
-    const key = Math.floor(Math.abs(interval));
+    const key = interval < 0 ? Math.floor(Math.abs(interval)) : 0;
     if (!res[key]) res[key] = [];
     res[key].push(item);
     return res;
@@ -70,11 +76,11 @@ export default class Graph {
     xRatio = Number.isFinite(xRatio) ? xRatio : this.width;
 
     const first = history.filter(Boolean)[0];
-    let last = [this._calcPoint(first), this._last(first)];
+    let last = [this._calcPoint(first), this._lastValue(first)];
     const getCoords = (item, i) => {
       const x = xRatio * i + this.margin[X];
       if (item)
-        last = [this._calcPoint(item), this._last(item)];
+        last = [this._calcPoint(item), this._lastValue(item)];
       return coords.push([x, 0, item ? last[0] : last[1]]);
     };
 
@@ -161,15 +167,14 @@ export default class Graph {
     return fill;
   }
 
-  getBars(position, total) {
+  getBars(position, total, spacing = 4) {
     const coords = this._calcY(this.coords);
-    const margin = 4;
-    const xRatio = ((this.width - margin) / Math.ceil(this.hours * this.points)) / total;
+    const xRatio = ((this.width - spacing) / Math.ceil(this.hours * this.points)) / total;
     return coords.map((coord, i) => ({
-      x: (xRatio * i * total) + (xRatio * position) + margin,
+      x: (xRatio * i * total) + (xRatio * position) + spacing,
       y: coord[Y],
       height: this.height - coord[Y] + this.margin[Y] * 4,
-      width: xRatio - margin,
+      width: xRatio - spacing,
       value: coord[V],
     }));
   }
@@ -192,7 +197,19 @@ export default class Graph {
     return Math.min(...items.map(item => item.state));
   }
 
+  _first(items) {
+    return parseFloat(items[0].state);
+  }
+
   _last(items) {
+    return parseFloat(items[items.length - 1].state);
+  }
+
+  _sum(items) {
+    return items.reduce((sum, entry) => sum + parseFloat(entry.state), 0);
+  }
+
+  _lastValue(items) {
     return parseFloat(items[items.length - 1].state) || 0;
   }
 

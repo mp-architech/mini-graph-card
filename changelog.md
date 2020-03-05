@@ -1,3 +1,49 @@
+## v0.9.3
+
+### FIXED
+- HA 0.106.x compatible #274 (#276)
+
+
+## v0.9.2
+
+### ADDED
+- Added sum aggregate function #257
+
+### FIXED
+- Fixed graph not rendering if the same entity is used multiple times in a config #263
+
+
+## v0.9.1
+
+### FIXED
+- Fixed broken extrema
+
+
+## v0.9.0
+
+### ADDED
+- New aggregate functions first & last #229 (#241)
+- New bar spacing option #221 (#242)
+- Added log of card version to the browser console
+- Option to enable/disable caching (#212)
+- Option to override default more-info entity (#202)
+- Added missing option parameter `url` to tap action docs
+
+### FIXED
+- Graph date not calculated correctly around midnight in certain configurations (#253)
+- Improved handling of out of bound history entries (#251)
+- Initial graph entry not always correct (#251)
+- Graph missing latest history entry after entity update (#250) 
+- Changes to min, max, avg not updating properly #248 (#249) 
+- Prevent tooltip from triggering multiple times on legend hover
+- Fixed broken babel build (developers)
+- Graphs not updating in time resulting in inconsistent x/y axis relation #194 #200 (#214)
+- Graphs not updating in sync resulting in inconsistent x/y axis relation #194 #200 (#214)
+- Missing and invalid/malformed graph data caused by caching #193 (#213)
+- Fixed invalid rendering of bars when hiding certain entities
+- Fill not showing when line is hidden & animate option is enabled
+
+
 ## v0.9.0-beta
 
 ### ADDED
